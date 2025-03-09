@@ -171,4 +171,8 @@
     </None>
   </ItemGroup>
 
+  <Target Name="AfterCleanSleep" AfterTargets="Clean">
+    <Exec Command="powershell -Command &quot;Start-Sleep -Seconds 5&quot;" Condition="'$(OS)'=='Windows_NT'"/>
+ </Target>
+
 </Project>
