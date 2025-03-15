@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <Year>$([System.DateTime]::Now.Year.ToString())</Year>
     <Copyright>Copyright © Implem Inc 2014 - $(Year)</Copyright>
     <Description>Business application platform</Description>
@@ -171,4 +171,8 @@
     </None>
   </ItemGroup>
 
+  <Target Name="AfterCleanSleep" AfterTargets="Clean">
+    <Exec Command="powershell -Command &quot;Start-Sleep -Seconds 5&quot;" Condition="'$(OS)'=='Windows_NT'"/>
+  </Target>
+    
 </Project>
