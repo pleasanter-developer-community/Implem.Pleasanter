@@ -149,9 +149,11 @@ namespace Implem.Pleasanter.NetCore
                     foreach (var assembly in Directory.GetFiles(path, "*.dll").Select(dll => Assembly.LoadFrom(dll)).ToArray())
                     {
                         mvcBuilder.AddApplicationPart(assembly);
-                        assembly.GetType("Implem.Pleasanter.NetCore.ExtendedLibrary.ExtendedLibrary")?
-                            .GetMethod("Initialize")?
-                            .Invoke(null, null);
+                        var extendedLib = assembly.GetType("Implem.Pleasanter.NetCore.ExtendedLibrary.ExtendedLibrary");
+                        if (extendedLib != null) {
+                            extendedLib.GetMethod("Initialize")?.Invoke(null, null);
+                            extendedLib.GetMethod("ConfigureServices", [typeof(IServiceCollection)])?.Invoke(null, [services]);
+                        }
                     }
                 }
             }
